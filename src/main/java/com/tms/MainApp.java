@@ -1,4 +1,4 @@
-package org.example.tms;
+package com.tms;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
