@@ -74,10 +74,7 @@ Application de gestion du transport permettant de gérer les **clients**, les **
 git clone https://github.com/6db9/tms.git
 cd tms
 
-# 2. Lancer le script d'installation
-bash setup.sh
-
-# 3. Compiler le projet
+# 2. Compiler le projet
 mvn clean install
 ```
 
