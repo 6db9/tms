@@ -9,9 +9,9 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.StringConverter;
 
 import java.time.format.DateTimeFormatter;
-import javafx.util.StringConverter;
 
 public class RequestController {
 
@@ -39,27 +39,34 @@ public class RequestController {
 
         // Setup Combos
         typeCombo.setItems(FXCollections.observableArrayList(RequestType.values()));
+
+        // show clients by name
+        clientCombo.setConverter(new StringConverter<Client>() {
+            @Override
+            public String toString(Client client) {
+                return client == null ? "" : client.getName();
+            }
+            @Override
+            public Client fromString(String string) { return null; }
+        });
+
+        // 3. Load initial data
+        refreshClientCombo();
+        refreshTable();
+    }
+
+    public void refreshClientCombo() {
         try {
+            Client currentSelection = clientCombo.getValue();
+
             clientCombo.setItems(FXCollections.observableArrayList(clientDAO.findAllActive()));
 
-            clientCombo.setConverter(new StringConverter<Client>() {
-                @Override
-                public String toString(Client client) {
-                    return client == null ? "" : client.getName();
-                }
-
-                @Override
-                public Client fromString(String string) {
-                    return null;
-                }
-            });
-
-
+            if (currentSelection != null) {
+                clientCombo.getSelectionModel().select(currentSelection);
+            }
         } catch (Exception e) {
             errorLabel.setText("Erreur lors du chargement des clients.");
         }
-
-        refreshTable();
     }
 
     private void refreshTable() {
@@ -73,6 +80,9 @@ public class RequestController {
     @FXML
     private void handleCreate() {
         errorLabel.setText("");
+
+        refreshClientCombo();
+
         Client selectedClient = clientCombo.getValue();
         RequestType selectedType = typeCombo.getValue();
 
