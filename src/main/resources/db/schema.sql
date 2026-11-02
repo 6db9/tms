@@ -29,10 +29,30 @@ INSERT IGNORE INTO roles (name) VALUES
 CREATE TABLE IF NOT EXISTS clients (
                                        id INT AUTO_INCREMENT PRIMARY KEY,
                                        name VARCHAR(100) NOT NULL,
-                                       phone VARCHAR(30),                -- text, per spec
+                                       phone VARCHAR(30),
                                        email VARCHAR(100),
                                        address VARCHAR(255),
                                        tax_id VARCHAR(50),
                                        archived BOOLEAN NOT NULL DEFAULT FALSE,
                                        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+
+CREATE TABLE IF NOT EXISTS vehicles (
+                                        id INT AUTO_INCREMENT PRIMARY KEY,
+                                        plate VARCHAR(20) NOT NULL UNIQUE,
+                                        type VARCHAR(50),
+                                        capacity_kg DECIMAL(10,2),
+                                        capacity_m3 DECIMAL(10,2),
+                                        archived BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+
+CREATE TABLE IF NOT EXISTS drivers (
+                                       id INT AUTO_INCREMENT PRIMARY KEY,
+                                       full_name VARCHAR(100) NOT NULL,
+                                       phone VARCHAR(30),
+                                       license_number VARCHAR(50),
+                                       license_valid_until DATE,
+                                       archived BOOLEAN NOT NULL DEFAULT FALSE
 );
