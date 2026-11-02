@@ -36,7 +36,6 @@ public class MainApp extends Application {
     }
 
     private void showDashboard() {
-
         TabPane tabPane = new TabPane();
 
         try {
@@ -46,10 +45,14 @@ public class MainApp extends Application {
             FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/com/tms/view/FleetView.fxml"));
             Tab tab2 = new Tab("Flotte (Véhicules & Chauffeurs)", loader2.load());
 
-            tabPane.getTabs().addAll(tab1, tab2);
+            // NEW TAB: Requests
+            FXMLLoader loader3 = new FXMLLoader(getClass().getResource("/com/tms/view/RequestsView.fxml"));
+            Tab tab3 = new Tab("Demandes", loader3.load());
+
+            tabPane.getTabs().addAll(tab1, tab2, tab3);
             tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-            primaryStage.setScene(new Scene(tabPane, 900, 600));
+            primaryStage.setScene(new Scene(tabPane, 1000, 650));
             primaryStage.setTitle("TMS - Tableau de bord");
         } catch (Exception e) {
             e.printStackTrace();

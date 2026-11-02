@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.tms.controller.RequestController" spacing="10">
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+    <Label text="Demandes (Transport / Vente)" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <SplitPane dividerPositions="0.65" VBox.vgrow="ALWAYS">
+        <!-- Left: Table -->
+        <TableView fx:id="requestTable">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                <TableColumn fx:id="colClient" text="Client" prefWidth="150"/>
+                <TableColumn fx:id="colType" text="Type" prefWidth="150"/>
+                <TableColumn fx:id="colState" text="État" prefWidth="100"/>
+                <TableColumn fx:id="colDate" text="Date de création" prefWidth="150"/>
+            </columns>
+        </TableView>
+
+        <!-- Right: Actions -->
+        <VBox spacing="10">
+            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+            <Label text="Nouvelle Demande" style="-fx-font-weight: bold;"/>
+            <Label text="Client :"/>
+            <ComboBox fx:id="clientCombo" maxWidth="Infinity"/>
+            <Label text="Type de demande :"/>
+            <ComboBox fx:id="typeCombo" maxWidth="Infinity"/>
+            <Button text="Créer (Brouillon)" onAction="#handleCreate" maxWidth="Infinity"/>
+
+            <Separator/>
+
+            <Label text="Actions sur la sélection :" style="-fx-font-weight: bold;"/>
+            <Button text="Valider" onAction="#handleValidate" maxWidth="Infinity"/>
+            <Button text="Annuler" onAction="#handleCancel" maxWidth="Infinity"/>
+
+            <Label fx:id="errorLabel" style="-fx-text-fill: red;" wrapText="true"/>
+        </VBox>
+    </SplitPane>
+</VBox>
