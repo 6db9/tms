@@ -34,12 +34,14 @@ public class MainApp extends Application {
     }
 
     private void showDashboard() {
-        // Temporary placeholder; replaced in slice 2.
-        javafx.scene.control.Label label = new javafx.scene.control.Label(
-                "Connecté en tant que : " + com.tms.util.Session.getUser().getUsername()
-                        + " " + com.tms.util.Session.getUser().getRoles());
-        label.setStyle("-fx-font-size: 16px; -fx-padding: 20;");
-        primaryStage.setScene(new Scene(new javafx.scene.layout.StackPane(label), 500, 300));
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/tms/view/ClientsView.fxml"));
+            Parent root = loader.load();
+            primaryStage.setScene(new Scene(root, 700, 500));
+            primaryStage.setTitle("TMS - Gestion des Clients");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
