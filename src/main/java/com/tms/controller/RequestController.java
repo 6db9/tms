@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.time.format.DateTimeFormatter;
+import javafx.util.StringConverter;
 
 public class RequestController {
 
@@ -40,6 +41,20 @@ public class RequestController {
         typeCombo.setItems(FXCollections.observableArrayList(RequestType.values()));
         try {
             clientCombo.setItems(FXCollections.observableArrayList(clientDAO.findAllActive()));
+
+            clientCombo.setConverter(new StringConverter<Client>() {
+                @Override
+                public String toString(Client client) {
+                    return client == null ? "" : client.getName();
+                }
+
+                @Override
+                public Client fromString(String string) {
+                    return null;
+                }
+            });
+
+
         } catch (Exception e) {
             errorLabel.setText("Erreur lors du chargement des clients.");
         }
