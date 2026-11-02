@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.tms.controller.PlanningController" spacing="10">
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+    <Label text="Planning et Affectation" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <SplitPane dividerPositions="0.6" VBox.vgrow="ALWAYS">
+        <!-- Left: Table -->
+        <TableView fx:id="missionTable">
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+                <TableColumn fx:id="colReqId" text="Demande ID" prefWidth="80"/>
+                <TableColumn fx:id="colVehicle" text="Véhicule" prefWidth="100"/>
+                <TableColumn fx:id="colDriver" text="Chauffeur" prefWidth="120"/>
+                <TableColumn fx:id="colStart" text="Début" prefWidth="130"/>
+                <TableColumn fx:id="colEnd" text="Fin" prefWidth="130"/>
+                <TableColumn fx:id="colState" text="État" prefWidth="100"/>
+            </columns>
+        </TableView>
+
+        <!-- Right: Planning Form -->
+        <VBox spacing="10">
+            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+            <Label text="Planifier une mission" style="-fx-font-weight: bold;"/>
+
+            <Label text="Demande (Validée) :"/>
+            <ComboBox fx:id="requestCombo" maxWidth="Infinity"/>
+
+            <Label text="Véhicule :"/>
+            <ComboBox fx:id="vehicleCombo" maxWidth="Infinity"/>
+
+            <Label text="Chauffeur :"/>
+            <ComboBox fx:id="driverCombo" maxWidth="Infinity"/>
+
+            <Label text="Date et Heure de début :"/>
+            <HBox spacing="5">
+                <DatePicker fx:id="startDatePicker" HBox.hgrow="ALWAYS"/>
+                <TextField fx:id="startTimeField" promptText="HH:MM" prefWidth="70"/>
+            </HBox>
+
+            <Label text="Date et Heure de fin :"/>
+            <HBox spacing="5">
+                <DatePicker fx:id="endDatePicker" HBox.hgrow="ALWAYS"/>
+                <TextField fx:id="endTimeField" promptText="HH:MM" prefWidth="70"/>
+            </HBox>
+
+            <Button text="Confirmer la planification" onAction="#handlePlan" maxWidth="Infinity"/>
+            <Label fx:id="errorLabel" style="-fx-text-fill: red;" wrapText="true"/>
+        </VBox>
+    </SplitPane>
+</VBox>

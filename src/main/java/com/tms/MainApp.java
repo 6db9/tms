@@ -39,20 +39,34 @@ public class MainApp extends Application {
         TabPane tabPane = new TabPane();
 
         try {
+            // Tab 1: Clients
             FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/com/tms/view/ClientsView.fxml"));
             Tab tab1 = new Tab("Clients", loader1.load());
 
+            // Tab 2: Fleet
             FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/com/tms/view/FleetView.fxml"));
             Tab tab2 = new Tab("Flotte (Véhicules & Chauffeurs)", loader2.load());
 
-            // NEW TAB: Requests
+            // Tab 3: Requests
             FXMLLoader loader3 = new FXMLLoader(getClass().getResource("/com/tms/view/RequestsView.fxml"));
             Tab tab3 = new Tab("Demandes", loader3.load());
 
-            tabPane.getTabs().addAll(tab1, tab2, tab3);
+            // Tab 4: Planning
+            FXMLLoader loader4 = new FXMLLoader(getClass().getResource("/com/tms/view/PlanningView.fxml"));
+            Tab tab4 = new Tab("Planning & Missions", loader4.load());
+
+            // Refresh Planning Combos when tab is clicked
+            com.tms.controller.PlanningController planCtrl = loader4.getController();
+            tab4.setOnSelectionChanged(event -> {
+                if (tab4.isSelected()) {
+                    planCtrl.refreshData();
+                }
+            });
+
+            tabPane.getTabs().addAll(tab1, tab2, tab3, tab4);
             tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-            primaryStage.setScene(new Scene(tabPane, 1000, 650));
+            primaryStage.setScene(new Scene(tabPane, 1100, 650));
             primaryStage.setTitle("TMS - Tableau de bord");
         } catch (Exception e) {
             e.printStackTrace();
