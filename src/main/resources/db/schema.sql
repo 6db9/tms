@@ -66,3 +66,17 @@ CREATE TABLE IF NOT EXISTS requests (
                                         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                         FOREIGN KEY (client_id) REFERENCES clients(id)
 );
+
+-- Missions
+CREATE TABLE IF NOT EXISTS missions (
+                                        id INT AUTO_INCREMENT PRIMARY KEY,
+                                        request_id INT NOT NULL,
+                                        vehicle_id INT,
+                                        driver_id INT,
+                                        state ENUM('TO_PLAN', 'PLANNED', 'IN_PROGRESS', 'DONE', 'CANCELLED') NOT NULL DEFAULT 'TO_PLAN',
+                                        planned_start DATETIME,
+                                        planned_end DATETIME,
+                                        FOREIGN KEY (request_id) REFERENCES requests(id),
+                                        FOREIGN KEY (vehicle_id) REFERENCES vehicles(id),
+                                        FOREIGN KEY (driver_id) REFERENCES drivers(id)
+);
