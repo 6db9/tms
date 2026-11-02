@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 
 public class MainApp extends Application {
 
@@ -34,11 +36,21 @@ public class MainApp extends Application {
     }
 
     private void showDashboard() {
+
+        TabPane tabPane = new TabPane();
+
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/tms/view/ClientsView.fxml"));
-            Parent root = loader.load();
-            primaryStage.setScene(new Scene(root, 700, 500));
-            primaryStage.setTitle("TMS - Gestion des Clients");
+            FXMLLoader loader1 = new FXMLLoader(getClass().getResource("/com/tms/view/ClientsView.fxml"));
+            Tab tab1 = new Tab("Clients", loader1.load());
+
+            FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/com/tms/view/FleetView.fxml"));
+            Tab tab2 = new Tab("Flotte (Véhicules & Chauffeurs)", loader2.load());
+
+            tabPane.getTabs().addAll(tab1, tab2);
+            tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+
+            primaryStage.setScene(new Scene(tabPane, 900, 600));
+            primaryStage.setTitle("TMS - Tableau de bord");
         } catch (Exception e) {
             e.printStackTrace();
         }

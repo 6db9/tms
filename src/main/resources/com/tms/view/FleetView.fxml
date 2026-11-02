@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.tms.controller.FleetController" spacing="10">
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+    <Label text="Gestion de la Flotte" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+        <!-- Vehicles Tab -->
+        <Tab text="Véhicules">
+            <SplitPane dividerPositions="0.6">
+                <TableView fx:id="vehicleTable">
+                    <columns>
+                        <TableColumn fx:id="colPlate" text="Immatriculation" prefWidth="120"/>
+                        <TableColumn fx:id="colVType" text="Type" prefWidth="100"/>
+                        <TableColumn fx:id="colCapKg" text="Capacité (kg)" prefWidth="100"/>
+                    </columns>
+                </TableView>
+                <VBox spacing="10">
+                    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+                    <Label text="Nouveau Véhicule" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="plateField" promptText="Immatriculation (ex: 123-A-45)"/>
+                    <TextField fx:id="vTypeField" promptText="Type (ex: Camion)"/>
+                    <TextField fx:id="capKgField" promptText="Capacité en kg (ex: 2000)"/>
+                    <Button text="Enregistrer" onAction="#handleSaveVehicle" maxWidth="Infinity"/>
+                    <Label fx:id="vErrorLabel" style="-fx-text-fill: red;" wrapText="true"/>
+                </VBox>
+            </SplitPane>
+        </Tab>
+
+        <!-- Drivers Tab -->
+        <Tab text="Chauffeurs">
+            <SplitPane dividerPositions="0.6">
+                <TableView fx:id="driverTable">
+                    <columns>
+                        <TableColumn fx:id="colDName" text="Nom Complet" prefWidth="150"/>
+                        <TableColumn fx:id="colDPhone" text="Téléphone" prefWidth="100"/>
+                        <TableColumn fx:id="colLicense" text="Permis" prefWidth="100"/>
+                        <TableColumn fx:id="colValidUntil" text="Valide jusqu'au" prefWidth="100"/>
+                    </columns>
+                </TableView>
+                <VBox spacing="10">
+                    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+                    <Label text="Nouveau Chauffeur" style="-fx-font-weight: bold;"/>
+                    <TextField fx:id="dNameField" promptText="Nom complet"/>
+                    <TextField fx:id="dPhoneField" promptText="Téléphone"/>
+                    <TextField fx:id="licenseField" promptText="N° de permis"/>
+                    <DatePicker fx:id="validUntilPicker" promptText="Valide jusqu'au"/>
+                    <Button text="Enregistrer" onAction="#handleSaveDriver" maxWidth="Infinity"/>
+                    <Label fx:id="dErrorLabel" style="-fx-text-fill: red;" wrapText="true"/>
+                </VBox>
+            </SplitPane>
+        </Tab>
+    </TabPane>
+</VBox>
