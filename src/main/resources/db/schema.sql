@@ -56,3 +56,13 @@ CREATE TABLE IF NOT EXISTS drivers (
                                        license_valid_until DATE,
                                        archived BOOLEAN NOT NULL DEFAULT FALSE
 );
+
+-- F3: Demandes
+CREATE TABLE IF NOT EXISTS requests (
+                                        id INT AUTO_INCREMENT PRIMARY KEY,
+                                        type ENUM('TRANSPORT_ONLY', 'SALE_WITH_DELIVERY') NOT NULL,
+                                        client_id INT NOT NULL,
+                                        state ENUM('DRAFT', 'VALIDATED', 'CLOSED', 'CANCELLED') NOT NULL DEFAULT 'DRAFT',
+                                        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                        FOREIGN KEY (client_id) REFERENCES clients(id)
+);
