@@ -25,3 +25,14 @@ CREATE TABLE IF NOT EXISTS user_roles (
 
 INSERT IGNORE INTO roles (name) VALUES
   ('ADMIN'), ('COORD'), ('COMMERCIAL'), ('FINANCIER'), ('READER');
+
+CREATE TABLE IF NOT EXISTS clients (
+                                       id INT AUTO_INCREMENT PRIMARY KEY,
+                                       name VARCHAR(100) NOT NULL,
+                                       phone VARCHAR(30),                -- text, per spec
+                                       email VARCHAR(100),
+                                       address VARCHAR(255),
+                                       tax_id VARCHAR(50),
+                                       archived BOOLEAN NOT NULL DEFAULT FALSE,
+                                       created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
