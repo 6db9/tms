@@ -4,6 +4,9 @@ public enum MissionState {
     TO_PLAN("À planifier"),
     PLANNED("Planifiée"),
     IN_PROGRESS("En cours"),
+    ARRIVED("Arrivée"),
+    WAITING("En attente"),
+    UNLOADING("En déchargement"),
     DONE("Terminée"),
     CANCELLED("Annulée");
 
