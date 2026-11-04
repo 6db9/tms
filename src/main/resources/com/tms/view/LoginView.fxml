@@ -12,7 +12,7 @@
     <VBox styleClass="brand-panel" prefWidth="560" minWidth="280" maxWidth="530" alignment="CENTER_LEFT" spacing="14">
         <VBox styleClass="logo-box"  maxHeight="48" prefWidth="48" prefHeight="48">
             <Label text="TMS - Transport" styleClass="logo-letter"/>
-            <Label text="Transport Management System" styleClass="brand-sub"/>
+            <Label text="Transport Management System - V1.0.0" styleClass="brand-sub"/>
         </VBox>
 
         <VBox styleClass="text-box">
@@ -35,7 +35,7 @@
 
 
     <VBox styleClass="form-panel" HBox.hgrow="ALWAYS" alignment="CENTER">
-        <VBox styleClass="form-box" maxWidth="300" spacing="16">
+        <VBox styleClass="form-box" maxWidth="450" spacing="16">
 
             <VBox spacing="4">
                 <Label text="Connexion" styleClass="form-title"/>

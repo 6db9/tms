@@ -4,18 +4,18 @@
 /* left panel */
 .brand-panel {
     -fx-background-color:#14202B;
-    -fx-background-radius: 10;
-    -fx-padding: 10;
+
+    -fx-padding: 10 5 5 20;
 }
-.logo-box { -fx-background-color: -accent; -fx-background-radius: 12; }
+.logo-box { -fx-background-color: -accent;  }
 .logo-letter { -fx-text-fill: #ffffff; -fx-font-size: 15px; -fx-font-weight: bold; }
 .brand-title { -fx-text-fill: #2174ac; -fx-font-size: 34px; -fx-font-weight: bold; }
 .brand-sub { -fx-text-fill: #CAC6C6ED; -fx-font-size: 10px; }
 .brand-text { -fx-text-fill: #ffffff; -fx-font-size: 22px;-fx-font-weight:bold;  -fx-padding: 16 0 0 0; }
-.text-box{ -fx-padding: 60 4 30 4 ; -fx-spacing: 16 ;}
+.text-box{ -fx-padding: 100 4 30 4 ; -fx-spacing: 16 ;}
 .parcours { -fx-text-fill: #ffffff; -fx-font-size: 12px; -fx-font-weight:bold; }
 .parcours-text{-fx-text-fill: #CAC6C6ED; -fx-font-size: 12px; }
-.footer { -fx-text-fill: #bfbcbc; -fx-font-weight: bold; -fx-font-size: 8px; }
+.footer { -fx-text-fill: #bfbcbc;  -fx-font-size: 10px; }
 
 /* right panel */
 .form-panel { -fx-background-color: #DCD7D7ED; -fx-padding: 40; }
