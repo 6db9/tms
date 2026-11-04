@@ -20,6 +20,7 @@ public class PlanningController {
     @FXML private TableView<Mission> missionTable;
     @FXML private TableColumn<Mission, Integer> colId;
     @FXML private TableColumn<Mission, String> colReqId, colVehicle, colDriver, colStart, colEnd, colState;
+    @FXML private TableColumn<Mission, String> colArrival, colWait, colUnload;
 
     @FXML private ComboBox<Request> requestCombo;
     @FXML private ComboBox<Vehicle> vehicleCombo;
@@ -44,6 +45,20 @@ public class PlanningController {
         colStart.setCellValueFactory(cell -> new javafx.beans.property.SimpleStringProperty(cell.getValue().getPlannedStart() != null ? cell.getValue().getPlannedStart().format(fmt) : "-"));
         colEnd.setCellValueFactory(cell -> new javafx.beans.property.SimpleStringProperty(cell.getValue().getPlannedEnd() != null ? cell.getValue().getPlannedEnd().format(fmt) : "-"));
         colState.setCellValueFactory(cell -> new javafx.beans.property.SimpleStringProperty(cell.getValue().getState().getLabel()));
+
+        // Setup F8 Columns
+        DateTimeFormatter timeFmt = DateTimeFormatter.ofPattern("dd/MM HH:mm");
+        colArrival.setCellValueFactory(cell -> new javafx.beans.property.SimpleStringProperty(
+                cell.getValue().getActualArrival() != null ? cell.getValue().getActualArrival().format(timeFmt) : "—"
+        ));
+
+        colWait.setCellValueFactory(cell -> new javafx.beans.property.SimpleStringProperty(
+                cell.getValue().getWaitingMinutes() != null ? String.valueOf(cell.getValue().getWaitingMinutes()) : "—"
+        ));
+
+        colUnload.setCellValueFactory(cell -> new javafx.beans.property.SimpleStringProperty(
+                cell.getValue().getUnloadingMinutes() != null ? String.valueOf(cell.getValue().getUnloadingMinutes()) : "—"
+        ));
 
         // Setup Combos (Converters)
         requestCombo.setConverter(new StringConverter<>() {
@@ -101,6 +116,50 @@ public class PlanningController {
             errorLabel.setText(e.getMessage());
         }
     }
+
+    // --- F7/F8 Lifecycle Actions ---
+
+    @FXML
+    private void handleStart() {
+        executeLifecycleAction(service::markInProgress);
+    }
+
+    @FXML
+    private void handleArrive() {
+        executeLifecycleAction(service::markArrived);
+    }
+
+    @FXML
+    private void handleUnload() {
+        executeLifecycleAction(service::startUnloading);
+    }
+
+    @FXML
+    private void handleDone() {
+        executeLifecycleAction(service::markDone);
+    }
+
+    private void executeLifecycleAction(UpdateAction action) {
+        errorLabel.setText("");
+        Mission selected = missionTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            errorLabel.setText("Veuillez sélectionner une mission dans le tableau.");
+            return;
+        }
+        try {
+            action.execute(selected);
+            refreshData(); // Reloads table to show new state & times
+        } catch (Exception e) {
+            errorLabel.setText(e.getMessage());
+        }
+    }
+
+    @FunctionalInterface
+    private interface UpdateAction {
+        void execute(Mission m) throws Exception;
+    }
+
+    // --- Date Parsing Helper ---
 
     private LocalDateTime parseDateTime(LocalDate date, String timeStr) throws Exception {
         if (timeStr == null || timeStr.isBlank()) {

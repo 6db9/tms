@@ -73,9 +73,12 @@ CREATE TABLE IF NOT EXISTS missions (
                                         request_id INT NOT NULL,
                                         vehicle_id INT,
                                         driver_id INT,
-                                        state ENUM('TO_PLAN', 'PLANNED', 'IN_PROGRESS', 'DONE', 'CANCELLED') NOT NULL DEFAULT 'TO_PLAN',
+                                        state ENUM('TO_PLAN', 'PLANNED', 'IN_PROGRESS', 'ARRIVED', 'WAITING', 'UNLOADING', 'DONE', 'CANCELLED') NOT NULL DEFAULT 'TO_PLAN',
                                         planned_start DATETIME,
                                         planned_end DATETIME,
+                                        actual_arrival DATETIME NULL,
+                                        actual_start DATETIME NULL,
+                                        actual_end DATETIME NULL,
                                         FOREIGN KEY (request_id) REFERENCES requests(id),
                                         FOREIGN KEY (vehicle_id) REFERENCES vehicles(id),
                                         FOREIGN KEY (driver_id) REFERENCES drivers(id)
