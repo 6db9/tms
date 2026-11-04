@@ -3,23 +3,59 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
+<HBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.tms.controller.LoginController"
-      alignment="CENTER" spacing="15">
-    <padding><Insets top="30" right="30" bottom="30" left="30"/></padding>
+      styleClass="login-root">
 
-    <Label text="TMS — Connexion" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
 
-    <GridPane hgap="10" vgap="10" alignment="CENTER">
-        <Label text="Utilisateur :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <TextField fx:id="usernameField" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="200"/>
+    <VBox styleClass="brand-panel" prefWidth="560" minWidth="280" maxWidth="530" alignment="CENTER_LEFT" spacing="14">
+        <VBox styleClass="logo-box"  maxHeight="48" prefWidth="48" prefHeight="48">
+            <Label text="TMS - Transport" styleClass="logo-letter"/>
+            <Label text="Transport Management System" styleClass="brand-sub"/>
+        </VBox>
 
-        <Label text="Mot de passe :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-        <PasswordField fx:id="passwordField" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="200"/>
-    </GridPane>
+        <VBox styleClass="text-box">
+            <Label text="Du devis à la livraison, un seul poste de pilotage."
+                          styleClass="brand-text" wrapText="true"/>
 
-    <Label fx:id="errorLabel" style="-fx-text-fill: red;" wrapText="true"/>
+            <HBox>
+                <Label text="Parcours A" styleClass="parcours" />
+                <Label text="— vente avec livraison" styleClass="parcours-text" />
+            </HBox>
+            <HBox>
+                <Label text="Parcours B" styleClass="parcours" />
+                <Label text="— transport seul" styleClass="parcours-text" />
+            </HBox>
+            <Label text="Planning, états de mission, déchargement, paiements et soldes." styleClass="parcours-text" />
+        </VBox>
+        <Region VBox.vgrow="ALWAYS"/>
+        <Label text="Application Java Desktop · accès par compte individuel" styleClass="footer"/>
+    </VBox>
 
-    <Button fx:id="loginButton" text="Se connecter" onAction="#onLogin" defaultButton="true" prefWidth="120"/>
-</VBox>
+
+    <VBox styleClass="form-panel" HBox.hgrow="ALWAYS" alignment="CENTER">
+        <VBox styleClass="form-box" maxWidth="300" spacing="16">
+
+            <VBox spacing="4">
+                <Label text="Connexion" styleClass="form-title"/>
+                <Label text="Utilisez votre compte individuel." styleClass="form-sub"/>
+            </VBox>
+
+            <VBox spacing="6">
+                <Label text="Identifiant" styleClass="field-label"/>
+                <TextField fx:id="usernameField" promptText="ex. s.benali"/>
+            </VBox>
+
+            <VBox spacing="6">
+                <Label text="Mot de passe" styleClass="field-label"/>
+                <PasswordField fx:id="passwordField" promptText="••••••••"/>
+            </VBox>
+
+            <Label fx:id="errorLabel" styleClass="error-label" wrapText="true"/>
+
+            <Button fx:id="loginButton" text="Se connecter" onAction="#onLogin"
+                    defaultButton="true" maxWidth="Infinity" styleClass="btn"/>
+        </VBox>
+    </VBox>
+</HBox>

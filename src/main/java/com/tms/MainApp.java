@@ -12,6 +12,12 @@ import javafx.scene.control.TabPane;
 public class MainApp extends Application {
 
     private Stage primaryStage;
+    private static final String THEME =
+            MainApp.class.getResource("/styles/theme.css").toExternalForm();
+
+    private void applyTheme(Scene scene) {
+        scene.getStylesheets().add(THEME);
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -28,7 +34,9 @@ public class MainApp extends Application {
             Parent root = loader.load();
             LoginController ctrl = loader.getController();
             ctrl.setOnSuccess(this::showDashboard);
-            primaryStage.setScene(new Scene(root, 400, 280));
+            Scene scene = new Scene(root, 820, 520);
+            applyTheme(scene);
+            primaryStage.setScene(scene);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Cannot load LoginView.fxml", e);
@@ -66,7 +74,9 @@ public class MainApp extends Application {
             tabPane.getTabs().addAll(tab1, tab2, tab3, tab4);
             tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-            primaryStage.setScene(new Scene(tabPane, 1100, 650));
+            Scene scene = new Scene(tabPane, 1100, 650);
+            applyTheme(scene);
+            primaryStage.setScene(scene);
             primaryStage.setTitle("TMS - Tableau de bord");
         } catch (Exception e) {
             e.printStackTrace();

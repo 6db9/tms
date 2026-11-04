@@ -1,0 +1,65 @@
+/* layout */
+.login-root { -fx-background-color: -surface; }
+
+/* left panel */
+.brand-panel {
+    -fx-background-color:#14202B;
+    -fx-background-radius: 10;
+    -fx-padding: 10;
+}
+.logo-box { -fx-background-color: -accent; -fx-background-radius: 12; }
+.logo-letter { -fx-text-fill: #ffffff; -fx-font-size: 15px; -fx-font-weight: bold; }
+.brand-title { -fx-text-fill: #2174ac; -fx-font-size: 34px; -fx-font-weight: bold; }
+.brand-sub { -fx-text-fill: #CAC6C6ED; -fx-font-size: 10px; }
+.brand-text { -fx-text-fill: #ffffff; -fx-font-size: 22px;-fx-font-weight:bold;  -fx-padding: 16 0 0 0; }
+.text-box{ -fx-padding: 60 4 30 4 ; -fx-spacing: 16 ;}
+.parcours { -fx-text-fill: #ffffff; -fx-font-size: 12px; -fx-font-weight:bold; }
+.parcours-text{-fx-text-fill: #CAC6C6ED; -fx-font-size: 12px; }
+.footer { -fx-text-fill: #bfbcbc; -fx-font-weight: bold; -fx-font-size: 8px; }
+
+/* right panel */
+.form-panel { -fx-background-color: #DCD7D7ED; -fx-padding: 40; }
+.form-box{ -fx-background-color: #ffffff; -fx-padding: 40;-fx-background-radius: 12; }
+.form-title { -fx-text-fill: -navy-900; -fx-font-size: 24px; -fx-font-weight: bold; }
+.form-sub { -fx-text-fill: -muted; -fx-font-size: 13px; }
+.field-label { -fx-text-fill: -muted; -fx-font-size: 12px; -fx-font-weight: bold; }
+.error-label { -fx-text-fill: #F11E1ECC; -fx-font-size: 12px; }
+
+/* inputs */
+.text-field, .password-field {
+    -fx-background-color: #F8FAFC;
+    -fx-text-fill: #14202B;
+    -fx-prompt-text-fill: #94A3B8;
+
+    -fx-font-size: 14px;
+    -fx-font-family: "Arial";
+
+    -fx-padding: 12px 15px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+
+    -fx-border-color: #CBD5E1;
+    -fx-border-width: 1px;
+}
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #3B82F6;
+    -fx-border-width: 1.5px;
+    -fx-background-color: white;
+}
+
+
+.btn {
+    -fx-background-color: #0F5C6E;
+    -fx-text-fill: #FFFFFF;
+
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+
+    -fx-padding: 12px 20px; }
+.btn:hover {
+    -fx-background-color: #0e758a;
+}
