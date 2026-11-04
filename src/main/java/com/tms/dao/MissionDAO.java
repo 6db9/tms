@@ -23,7 +23,7 @@ public class MissionDAO {
     }
 
 
-     // Checks if a vehicle or driver is already booked during the requested time period.
+    // Checks if a vehicle or driver is already booked during the requested time period.
 
     public boolean hasConflict(int vehicleId, int driverId, Timestamp start, Timestamp end) throws SQLException {
         String sql = "SELECT 1 FROM missions " +
@@ -33,17 +33,34 @@ public class MissionDAO {
         try (PreparedStatement ps = Database.getConnection().prepareStatement(sql)) {
             ps.setInt(1, vehicleId);
             ps.setInt(2, driverId);
-            ps.setTimestamp(3, end);   // Existing start < New end
-            ps.setTimestamp(4, start); // Existing end > New start
+            ps.setTimestamp(3, end);
+            ps.setTimestamp(4, start);
             try (ResultSet rs = ps.executeQuery()) {
-                return rs.next(); // true if a conflict is found
+                return rs.next();
             }
+        }
+    }
+
+    // THIS WAS MISSING
+    public void updateProgress(int missionId, MissionState newState,
+                               java.time.LocalDateTime arrival,
+                               java.time.LocalDateTime start,
+                               java.time.LocalDateTime end) throws SQLException {
+        String sql = "UPDATE missions SET state = ?, actual_arrival = ?, actual_start = ?, actual_end = ? WHERE id = ?";
+        try (PreparedStatement ps = Database.getConnection().prepareStatement(sql)) {
+            ps.setString(1, newState.name());
+            ps.setTimestamp(2, arrival != null ? Timestamp.valueOf(arrival) : null);
+            ps.setTimestamp(3, start != null ? Timestamp.valueOf(start) : null);
+            ps.setTimestamp(4, end != null ? Timestamp.valueOf(end) : null);
+            ps.setInt(5, missionId);
+            ps.executeUpdate();
         }
     }
 
     public List<Mission> findAll() throws SQLException {
         List<Mission> list = new ArrayList<>();
         String sql = "SELECT m.id, m.state, m.planned_start, m.planned_end, " +
+                "m.actual_arrival, m.actual_start, m.actual_end, " + // ADDED ACTUAL TIMES HERE
                 "r.id AS req_id, r.type AS req_type, " +
                 "v.plate AS v_plate, " +
                 "d.full_name AS d_name " +
@@ -65,6 +82,14 @@ public class MissionDAO {
                 Timestamp end = rs.getTimestamp("planned_end");
                 if (end != null) m.setPlannedEnd(end.toLocalDateTime());
 
+                // Fetch the new F8 Times
+                Timestamp arr = rs.getTimestamp("actual_arrival");
+                if (arr != null) m.setActualArrival(arr.toLocalDateTime());
+                Timestamp stTime = rs.getTimestamp("actual_start");
+                if (stTime != null) m.setActualStart(stTime.toLocalDateTime());
+                Timestamp en = rs.getTimestamp("actual_end");
+                if (en != null) m.setActualEnd(en.toLocalDateTime());
+
                 Request req = new Request();
                 req.setId(rs.getInt("req_id"));
                 req.setType(RequestType.valueOf(rs.getString("req_type")));
@@ -74,6 +99,7 @@ public class MissionDAO {
                 v.setPlate(rs.getString("v_plate"));
                 m.setVehicle(v);
 
+                // Fixed the ambiguous Driver reference here
                 com.tms.model.Driver d = new com.tms.model.Driver();
                 d.setFullName(rs.getString("d_name"));
                 m.setDriver(d);
