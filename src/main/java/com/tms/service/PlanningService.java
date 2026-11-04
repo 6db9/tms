@@ -62,4 +62,29 @@ public class PlanningService {
         Session.touch();
         return missionDAO.findAll();
     }
+
+    public void markInProgress(Mission m) throws Exception {
+        Session.requireRole(Role.ADMIN);
+        if (m.getState() != MissionState.PLANNED) throw new Exception("La mission doit être Planifiée.");
+        missionDAO.updateProgress(m.getId(), MissionState.IN_PROGRESS, m.getActualArrival(), m.getActualStart(), m.getActualEnd());
+    }
+
+    public void markArrived(Mission m) throws Exception {
+        Session.requireRole(Role.ADMIN);
+        if (m.getState() != MissionState.IN_PROGRESS) throw new Exception("La mission doit être En cours.");
+        missionDAO.updateProgress(m.getId(), MissionState.ARRIVED, java.time.LocalDateTime.now(), m.getActualStart(), m.getActualEnd());
+    }
+
+    public void startUnloading(Mission m) throws Exception {
+        Session.requireRole(Role.ADMIN);
+        if (m.getState() != MissionState.ARRIVED && m.getState() != MissionState.WAITING)
+            throw new Exception("La mission doit être Arrivée ou En attente.");
+        missionDAO.updateProgress(m.getId(), MissionState.UNLOADING, m.getActualArrival(), java.time.LocalDateTime.now(), m.getActualEnd());
+    }
+
+    public void markDone(Mission m) throws Exception {
+        Session.requireRole(Role.ADMIN);
+        if (m.getState() != MissionState.UNLOADING) throw new Exception("La mission doit être En déchargement.");
+        missionDAO.updateProgress(m.getId(), MissionState.DONE, m.getActualArrival(), m.getActualStart(), java.time.LocalDateTime.now());
+    }
 }
