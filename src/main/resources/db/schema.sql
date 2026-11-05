@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS drivers (
                                        archived BOOLEAN NOT NULL DEFAULT FALSE
 );
 
--- F3: Demandes
+-- Demandes
 CREATE TABLE IF NOT EXISTS requests (
                                         id INT AUTO_INCREMENT PRIMARY KEY,
                                         type ENUM('TRANSPORT_ONLY', 'SALE_WITH_DELIVERY') NOT NULL,
@@ -82,4 +82,25 @@ CREATE TABLE IF NOT EXISTS missions (
                                         FOREIGN KEY (request_id) REFERENCES requests(id),
                                         FOREIGN KEY (vehicle_id) REFERENCES vehicles(id),
                                         FOREIGN KEY (driver_id) REFERENCES drivers(id)
+);
+
+-- Paiements
+CREATE TABLE IF NOT EXISTS payments (
+                                        id INT AUTO_INCREMENT PRIMARY KEY,
+                                        request_id INT NOT NULL,
+                                        amount DECIMAL(12,2) NOT NULL,
+                                        state ENUM('ANNOUNCED', 'PENDING', 'CONFIRMED', 'REJECTED', 'CANCELLED') NOT NULL DEFAULT 'ANNOUNCED',
+                                        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                        FOREIGN KEY (request_id) REFERENCES requests(id)
+);
+
+-- Dépenses
+CREATE TABLE IF NOT EXISTS expenses (
+                                        id INT AUTO_INCREMENT PRIMARY KEY,
+                                        mission_id INT NOT NULL,
+                                        category VARCHAR(50) NOT NULL,
+                                        amount DECIMAL(12,2) NOT NULL,
+                                        expense_date DATE NOT NULL,
+                                        reference VARCHAR(100),
+                                        FOREIGN KEY (mission_id) REFERENCES missions(id)
 );
