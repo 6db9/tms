@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.tms.controller.SearchController" spacing="10">
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+    <Label text="Recherche Globale et Consultation" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <HBox spacing="10">
+        <TextField fx:id="searchField" promptText="Rechercher par client, ID, ou description..." HBox.hgrow="ALWAYS"/>
+        <Button text="Rechercher" onAction="#handleSearch"/>
+        <Button text="Tout afficher" onAction="#handleReset"/>
+    </HBox>
+
+    <TableView fx:id="searchTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colId" text="ID Demande" prefWidth="80"/>
+            <TableColumn fx:id="colClient" text="Client" prefWidth="150"/>
+            <TableColumn fx:id="colType" text="Type" prefWidth="130"/>
+            <TableColumn fx:id="colState" text="État" prefWidth="100"/>
+            <TableColumn fx:id="colWeight" text="Poids Total" prefWidth="100"/>
+            <TableColumn fx:id="colDate" text="Date de création" prefWidth="150"/>
+        </columns>
+    </TableView>
+</VBox>
