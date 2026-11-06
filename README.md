@@ -31,6 +31,14 @@ Une application simple de gestion du transport : clients, chauffeurs et véhicul
 ### Planning
 
 ![Planning](images/planning.png)
+
+### Depenses
+
+![Depenses](images/depenses.png)
+
+### Paiements
+
+![Planning](images/paiements.png)
 ---
 
 **Pas encore terminé.**
