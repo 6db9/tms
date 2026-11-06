@@ -13,11 +13,14 @@ import java.util.List;
 public class RequestDAO {
 
     public void insert(Request r) throws SQLException {
-        String sql = "INSERT INTO requests (type, client_id, state) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO requests (type, client_id, state, load_description, quantity, weight_per_item) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = Database.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, r.getType().name());
             ps.setInt(2, r.getClient().getId());
             ps.setString(3, r.getState().name());
+            ps.setString(4, r.getLoadDescription());
+            ps.setObject(5, r.getQuantity(), java.sql.Types.INTEGER);
+            ps.setBigDecimal(6, r.getWeightPerItem());
             ps.executeUpdate();
             try (ResultSet keys = ps.getGeneratedKeys()) {
                 if (keys.next()) r.setId(keys.getInt(1));
@@ -36,7 +39,7 @@ public class RequestDAO {
 
     public List<Request> findAll() throws SQLException {
         List<Request> list = new ArrayList<>();
-        String sql = "SELECT r.id, r.type, r.state, r.created_at, " +
+        String sql = "SELECT r.id, r.type, r.state, r.created_at, r.load_description, r.quantity, r.weight_per_item, " +
                 "c.id AS c_id, c.name AS c_name, c.phone AS c_phone " +
                 "FROM requests r " +
                 "JOIN clients c ON r.client_id = c.id " +
@@ -50,6 +53,9 @@ public class RequestDAO {
                 r.setType(RequestType.valueOf(rs.getString("type")));
                 r.setState(RequestState.valueOf(rs.getString("state")));
                 r.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+                r.setLoadDescription(rs.getString("load_description"));
+                r.setQuantity(rs.getObject("quantity") != null ? rs.getInt("quantity") : null);
+                r.setWeightPerItem(rs.getBigDecimal("weight_per_item"));
 
                 Client c = new Client();
                 c.setId(rs.getInt("c_id"));
