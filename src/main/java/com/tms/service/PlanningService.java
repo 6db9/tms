@@ -11,8 +11,11 @@ import java.util.List;
 
 public class PlanningService {
 
-    private final MissionDAO missionDAO = new MissionDAO();
-    private final RequestDAO requestDAO = new RequestDAO();
+    private final MissionDAO missionDAO;
+    private final RequestDAO requestDAO;
+
+    public PlanningService() { this(new MissionDAO(), new RequestDAO()); }
+    public PlanningService(MissionDAO m, RequestDAO r) { this.missionDAO = m; this.requestDAO = r; }
 
     public void planMission(Request request, Vehicle vehicle, Driver driver, java.time.LocalDateTime start, java.time.LocalDateTime end) throws Exception {
         Session.requireRole(Role.ADMIN);
@@ -49,6 +52,8 @@ public class PlanningService {
         m.setPlannedEnd(end);
 
         missionDAO.insert(m);
+
+        AuditService.log("CREATE_MISSION", "Mission", m.getId(), null, "State: PLANNED"); // logs
     }
 
     public List<Request> getValidatedRequests() throws SQLException {
@@ -67,12 +72,16 @@ public class PlanningService {
         Session.requireRole(Role.ADMIN);
         if (m.getState() != MissionState.PLANNED) throw new Exception("La mission doit être Planifiée.");
         missionDAO.updateProgress(m.getId(), MissionState.IN_PROGRESS, m.getActualArrival(), m.getActualStart(), m.getActualEnd());
+
+        AuditService.log("MISSION_STATE_CHANGE", "Mission", m.getId(), m.getState().name(), MissionState.IN_PROGRESS.name()); // logs
     }
 
     public void markArrived(Mission m) throws Exception {
         Session.requireRole(Role.ADMIN);
         if (m.getState() != MissionState.IN_PROGRESS) throw new Exception("La mission doit être En cours.");
         missionDAO.updateProgress(m.getId(), MissionState.ARRIVED, java.time.LocalDateTime.now(), m.getActualStart(), m.getActualEnd());
+
+        AuditService.log("MISSION_STATE_CHANGE", "Mission", m.getId(), m.getState().name(), MissionState.ARRIVED.name()); // logs
     }
 
     public void startUnloading(Mission m) throws Exception {
@@ -80,11 +89,15 @@ public class PlanningService {
         if (m.getState() != MissionState.ARRIVED && m.getState() != MissionState.WAITING)
             throw new Exception("La mission doit être Arrivée ou En attente.");
         missionDAO.updateProgress(m.getId(), MissionState.UNLOADING, m.getActualArrival(), java.time.LocalDateTime.now(), m.getActualEnd());
+
+        AuditService.log("MISSION_STATE_CHANGE", "Mission", m.getId(), m.getState().name(), MissionState.UNLOADING.name()); // logs
     }
 
     public void markDone(Mission m) throws Exception {
         Session.requireRole(Role.ADMIN);
         if (m.getState() != MissionState.UNLOADING) throw new Exception("La mission doit être En déchargement.");
         missionDAO.updateProgress(m.getId(), MissionState.DONE, m.getActualArrival(), m.getActualStart(), java.time.LocalDateTime.now());
+
+        AuditService.log("MISSION_STATE_CHANGE", "Mission", m.getId(), m.getState().name(), MissionState.DONE.name()); // logs
     }
 }

@@ -8,13 +8,14 @@ import java.sql.SQLException;
 
 public class AuthService {
 
-    private final UserDAO userDAO = new UserDAO();
+    private final UserDAO userDAO;
 
-    /**
-     * Returns the authenticated user, or throws AuthException.
-     * Note: on any failure (unknown, wrong password, disabled) the same
-     * generic message is used — spec F1 rule.
-     */
+    public AuthService() { this(new UserDAO()); }
+
+    public AuthService(UserDAO userDAO) { this.userDAO = userDAO; }
+
+    // Returns the authenticated user, or throws AuthException.
+
     public User login(String username, String password) throws AuthException {
         if (username == null || password == null ||
                 username.isBlank() || password.isBlank()) {
