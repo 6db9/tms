@@ -24,6 +24,7 @@
       <artifactId>javafx-controls</artifactId>
       <version>${javafx.version}</version>
     </dependency>
+
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
@@ -45,11 +46,20 @@
       <scope>test</scope>
     </dependency>
 
-      <dependency>
-          <groupId>org.mindrot</groupId>
-          <artifactId>jbcrypt</artifactId>
-          <version>0.4</version>
-      </dependency>
+    <!-- jbcrypt -->
+    <dependency>
+        <groupId>org.mindrot</groupId>
+        <artifactId>jbcrypt</artifactId>
+        <version>0.4</version>
+    </dependency>
+
+    <!-- JUnit Tests -->
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>5.19.0</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
