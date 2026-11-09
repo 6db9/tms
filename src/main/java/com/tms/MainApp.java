@@ -4,6 +4,7 @@ import com.tms.controller.FinanceController;
 import com.tms.controller.LoginController;
 import com.tms.controller.PlanningController;
 import com.tms.controller.SearchController;
+import com.tms.controller.AuditController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -70,6 +71,7 @@ public class MainApp extends Application {
                 if (tab5.isSelected()) finCtrl.refreshData();
             });
 
+            // Tab 5: Recherche
             FXMLLoader loader6 = new FXMLLoader(getClass().getResource("/com/tms/view/SearchView.fxml"));
             Tab tab6 = new Tab("Recherche", loader6.load());
             SearchController searchCtrl = loader6.getController();
@@ -78,8 +80,16 @@ public class MainApp extends Application {
             });
 
 
+            // Tab 7: Audit Log
+            FXMLLoader loader7 = new FXMLLoader(getClass().getResource("/com/tms/view/AuditView.fxml"));
+            Tab tab7 = new Tab("Journal d'Audit", loader7.load());
+            AuditController auditCtrl = loader7.getController();
+            tab7.setOnSelectionChanged(event -> {
+                if (tab7.isSelected()) auditCtrl.loadData();
+            });
+
             // Add all tabs ONCE
-            tabPane.getTabs().addAll(tab1, tab2, tab3, tab4, tab5, tab6);
+            tabPane.getTabs().addAll(tab1, tab2, tab3, tab4, tab5, tab6, tab7);
             tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
             primaryStage.setScene(new Scene(tabPane, 1100, 650));

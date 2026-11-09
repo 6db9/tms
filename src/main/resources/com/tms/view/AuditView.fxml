@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.tms.controller.AuditController" spacing="10">
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+    <Label text="Journal d'Audit (Traçabilité des actions critiques)" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <TableView fx:id="auditTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colDate" text="Date / Heure" prefWidth="160"/>
+            <TableColumn fx:id="colUser" text="Utilisateur" prefWidth="100"/>
+            <TableColumn fx:id="colAction" text="Action" prefWidth="150"/>
+            <TableColumn fx:id="colEntity" text="Entité" prefWidth="100"/>
+            <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+            <TableColumn fx:id="colOld" text="Ancienne Valeur" prefWidth="150"/>
+            <TableColumn fx:id="colNew" text="Nouvelle Valeur" prefWidth="150"/>
+        </columns>
+    </TableView>
+</VBox>
